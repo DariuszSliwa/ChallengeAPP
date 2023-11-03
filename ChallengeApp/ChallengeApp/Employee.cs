@@ -29,7 +29,7 @@
 
         public string showInformationAboutEmployee
         {
-            get 
+            get
             {
                 return "Pracownik/ca z największą liczbą punktów: " + this.Name + " " + this.Surname + ", " + this.Age + " lat, uzyskał/a punktów: " + Result;
             }
