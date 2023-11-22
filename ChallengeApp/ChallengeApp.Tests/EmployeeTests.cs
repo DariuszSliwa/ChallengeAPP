@@ -50,5 +50,23 @@ namespace ChallengeApp.Tests
             //action
             Assert.AreEqual(7.5, statistics.Average);
         }
+
+        [Test]
+        public void WhenEmployeeCollectThreeGrades_ShouldReturnCorrectAverageLetter()
+        {
+            // arrange
+            var employee = new Employee("Dariusz", "Nowicki", 33);
+            employee.AddGrade(20);
+            employee.AddGrade(40);
+            employee.AddGrade(80);
+            employee.AddGrade(90);
+            employee.AddGrade('B');
+
+            // act
+            var statistics = employee.GetStatistics();
+
+            //action
+            Assert.AreEqual('B', statistics.AverageLetter);
+        }
     }
 }

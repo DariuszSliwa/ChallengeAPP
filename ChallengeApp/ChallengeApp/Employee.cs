@@ -68,11 +68,36 @@ namespace ChallengeApp
             }
             else
             {
-                Console.WriteLine("invalid charcter");
+                switch (grade)
+                {
+                    case 'A':
+                    case 'a':
+                        this.grades.Add(100);
+                        break;
+                    case 'B':
+                    case 'b':
+                        this.grades.Add(80);
+                        break;
+                    case 'C':
+                    case 'c':
+                        this.grades.Add(60);
+                        break;
+                    case 'D':
+                    case 'd':
+                        this.grades.Add(40);
+                        break;
+                    case 'E':
+                    case 'e':
+                        this.grades.Add(20);
+                        break;
+                    default:
+                        Console.WriteLine("invalid charcter");
+                        break;
+                }
             }
         }
 
-        public Statistics GetStatisticsForEach()
+        public Statistics GetStatistics()
         {
             var statistics = new Statistics();
             statistics.Average = 0;
@@ -88,69 +113,24 @@ namespace ChallengeApp
 
             statistics.Average /= this.grades.Count;
 
-            return statistics;
-        }
-
-        public Statistics GetStatisticsWhile()
-        {
-            var statistics = new Statistics();
-            statistics.Average = 0;
-            statistics.Max = float.MinValue;
-            statistics.Min = float.MaxValue;
-
-            var index = 0;
-
-            while (index < this.grades.Count)
+            switch (statistics.Average)
             {
-                statistics.Max = Math.Max(statistics.Max, this.grades[index]);
-                statistics.Min = Math.Min(statistics.Min, this.grades[index]);
-                statistics.Average += this.grades[index];
-                index++;
+                case var a when a >= 80:
+                    statistics.AverageLetter = 'A';
+                    break;
+                case var a when a >= 60:
+                    statistics.AverageLetter = 'B';
+                    break;
+                case var a when a >= 40:
+                    statistics.AverageLetter = 'C';
+                    break;
+                case var a when a >= 20:
+                    statistics.AverageLetter = 'D';
+                    break;
+                default:
+                    statistics.AverageLetter = 'E';
+                    break;
             }
-
-            statistics.Average /= this.grades.Count;
-
-            return statistics;
-        }
-
-        public Statistics GetStatisticsDoWhile()
-        {
-            var statistics = new Statistics();
-            statistics.Average = 0;
-            statistics.Max = float.MinValue;
-            statistics.Min = float.MaxValue;
-
-            var index = 0;
-
-            do
-            {
-                statistics.Max = Math.Max(statistics.Max, this.grades[index]);
-                statistics.Min = Math.Min(statistics.Min, this.grades[index]);
-                statistics.Average += this.grades[index];
-                index++;
-            } while (index < this.grades.Count);
-
-            statistics.Average /= this.grades.Count;
-
-            return statistics;
-        }
-
-        public Statistics GetStatisticsFor()
-        {
-            var statistics = new Statistics();
-            statistics.Average = 0;
-            statistics.Max = float.MinValue;
-            statistics.Min = float.MaxValue;
-
-
-            for (int i = 0; i < this.grades.Count; i++)
-            {
-                statistics.Max = Math.Max(statistics.Max, this.grades[i]);
-                statistics.Min = Math.Min(statistics.Min, this.grades[i]);
-                statistics.Average += this.grades[i];
-            }
-
-            statistics.Average /= this.grades.Count;
 
             return statistics;
         }
