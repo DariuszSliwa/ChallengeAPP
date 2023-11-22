@@ -15,9 +15,14 @@ while (true)
     {
         break;
     }
-    else 
+
+    try
     {
         employee1.AddGrade(input);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine($"Exception catched: {e.Message}");
     }
 }
 

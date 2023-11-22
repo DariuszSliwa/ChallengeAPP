@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace ChallengeApp
+﻿namespace ChallengeApp
 {
     public class Employee
     {
@@ -25,7 +23,7 @@ namespace ChallengeApp
             }
             else
             {
-                Console.WriteLine("invalid grade value");
+                throw new Exception("invalid grade value");
             }
         }
 
@@ -37,7 +35,7 @@ namespace ChallengeApp
             }
             else
             {
-                Console.WriteLine("String is not float");
+                throw new Exception("String is not float");
             }
         }
 
@@ -91,8 +89,7 @@ namespace ChallengeApp
                         this.grades.Add(20);
                         break;
                     default:
-                        Console.WriteLine("invalid charcter");
-                        break;
+                        throw new Exception("invalid charcter");
                 }
             }
         }
