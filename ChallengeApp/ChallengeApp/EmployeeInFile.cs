@@ -1,26 +1,22 @@
 ﻿namespace ChallengeApp
 {
-    public class Employee : IEmployee
+    public class EmployeeInFile : EmployeeBase
     {
-        private List<float> grades = new List<float>();
+        private const string fileName = "grades.txt";
 
-        public Employee(string name, string surname, char sex, int age)
+        public EmployeeInFile(string name, string surname, char sex, int age)
+            : base(name, surname, sex, age)
         {
-            this.Name = name;
-            this.Surname = surname;
-            this.Sex = sex;
-            this.Age = age;
         }
-        public string Name { get; private set; }
-        public string Surname { get; private set; }
-        public char Sex { get; private set; }
-        public int Age { get; private set; }
 
-        public void AddGrade(float grade)
+        public override void AddGrade(float grade)
         {
             if (grade >= 0 && grade <= 100)
             {
-                this.grades.Add(grade);
+                using (var writer = File.AppendText(fileName))
+                {
+                    writer.WriteLine(grade);
+                }
             }
             else
             {
@@ -28,7 +24,7 @@
             }
         }
 
-        public void AddGrade(string grade)
+        public override void AddGrade(string grade)
         {
             if (float.TryParse(grade, out float result))
             {
@@ -40,25 +36,25 @@
             }
         }
 
-        public void AddGrade(long grade)
+        public override void AddGrade(long grade)
         {
             float result = grade;
             this.AddGrade(result);
         }
 
-        public void AddGrade(int grade)
+        public override void AddGrade(int grade)
         {
             float result = grade;
             this.AddGrade(result);
         }
 
-        public void AddGrade(double grade)
+        public override void AddGrade(double grade)
         {
             float result = (float)grade;
             this.AddGrade(result);
         }
 
-        public void AddGrade(char grade)
+        public override void AddGrade(char grade)
         {
             if (char.IsDigit(grade))
             {
@@ -95,21 +91,48 @@
             }
         }
 
-        public Statistics GetStatistics()
+        public override Statistics GetStatistics()
+        {
+            var gradesFromFile = this.ReadGradesFromFile();
+            var result = this.CountStatistics(gradesFromFile);
+            return result;
+        }
+
+        private List<float> ReadGradesFromFile()
+        {
+            var grades = new List<float>();
+            if (File.Exists(fileName))
+            {
+                using (var reader = File.OpenText(fileName))
+                {
+                    var line = reader.ReadLine();
+
+                    while (line != null)
+                    {
+                        var number = float.Parse(line);
+                        grades.Add(number);
+                        line = reader.ReadLine();
+                    }
+                }
+            }
+            return grades;
+        }
+
+        private Statistics CountStatistics(List<float> grades)
         {
             var statistics = new Statistics();
             statistics.Average = 0;
             statistics.Max = float.MinValue;
             statistics.Min = float.MaxValue;
 
-            foreach (var grade in this.grades)
+            foreach (var grade in grades)
             {
                 statistics.Max = Math.Max(statistics.Max, grade);
                 statistics.Min = Math.Min(statistics.Min, grade);
                 statistics.Average += grade;
             }
 
-            statistics.Average /= this.grades.Count;
+            statistics.Average /= grades.Count;
 
             switch (statistics.Average)
             {
