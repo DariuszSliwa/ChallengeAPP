@@ -1,36 +1,37 @@
 ﻿using ChallengeApp;
 
-var employee = new EmployeeInFile("Adam", "Nowicki", 'M', 33);
+var employee = new EmployeeInMemory("Adam", "Nowicki", 'M', 33);
 
 Console.WriteLine("Witamy w Programie XYZ do oceny Pracowników");
 Console.WriteLine("===========================================");
 Console.WriteLine();
 
-employee.AddGrade(55);
-employee.AddGrade('a');
-employee.AddGrade("100");
-employee.AddGrade("22");
-employee.AddGrade("22");
+employee.GradeAdded += EmployeeGradeAdded;
 
-//while (true)
-//{
-//    Console.WriteLine("Podaj ocenę pracownika: ");
-//    var input = Console.ReadLine();
+void EmployeeGradeAdded(object sender, EventArgs args)
+{
+    Console.WriteLine("Dodano nową ocenę");
+}
 
-//    if (input == "q")
-//    {
-//        break;
-//    }
+while (true)
+{
+    Console.WriteLine("Podaj ocenę pracownika: ");
+    var input = Console.ReadLine();
 
-//    try
-//    {
-//        employee.AddGrade(input);
-//    }
-//    catch (Exception e)
-//    {
-//        Console.WriteLine($"Exception catched: {e.Message}");
-//    }
-//}
+    if (input == "q")
+    {
+        break;
+    }
+
+    try
+    {
+        employee.AddGrade(input);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine($"Exception catched: {e.Message}");
+    }
+}
 
 var statistics = employee.GetStatistics();
 
