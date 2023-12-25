@@ -1,6 +1,6 @@
 ﻿using ChallengeApp;
 
-var employee = new EmployeeInMemory("Adam", "Nowicki", 'M', 33);
+var employee = new EmployeeInFile("Adam", "Nowicki", 'M', 33);
 
 Console.WriteLine("Witamy w Programie XYZ do oceny Pracowników");
 Console.WriteLine("===========================================");
